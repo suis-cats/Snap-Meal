@@ -7,6 +7,7 @@ import SwiftUI
 /// `Codable`. Encoding/decoding can be added later with a custom
 /// implementation if persistence is required.
 struct Meal: Identifiable {
+
     enum MealTime: String, Codable, CaseIterable {
         case breakfast = "朝"
         case lunch = "昼"
