@@ -10,6 +10,8 @@ struct CameraView: View {
         ZStack {
             CameraPreviewView(image: $capturedImage)
                 .ignoresSafeArea()
+            CameraOverlayView()
+                .ignoresSafeArea()
             VStack {
                 HStack {
                     Spacer()
@@ -33,6 +35,13 @@ struct CameraView: View {
                         .shadow(radius: 4)
                 }
                 .padding(.bottom, 40)
+            }
+            VStack {
+                Image("AppLogo")
+                    .resizable()
+                    .frame(width: 36, height: 36)
+                    .padding(.top, 8)
+                Spacer()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .photoCaptured)) { notification in

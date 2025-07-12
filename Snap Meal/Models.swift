@@ -1,13 +1,7 @@
 import Foundation
 import SwiftUI
 
-/// Represents a meal captured by the user.
-///
-/// `Codable` conformance was removed because `UIImage` does not conform to
-/// `Codable`. Encoding/decoding can be added later with a custom
-/// implementation if persistence is required.
-struct Meal: Identifiable {
-
+struct Meal: Identifiable, Codable {
     enum MealTime: String, Codable, CaseIterable {
         case breakfast = "朝"
         case lunch = "昼"
