@@ -29,7 +29,6 @@ struct CameraPreviewView: UIViewRepresentable {
               let input = try? AVCaptureDeviceInput(device: device) else { return }
 
         session.beginConfiguration()
-
         if session.canAddInput(input) { session.addInput(input) }
         if session.canAddOutput(output) { session.addOutput(output) }
         session.commitConfiguration()
