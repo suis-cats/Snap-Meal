@@ -5,6 +5,8 @@ struct CameraView: View {
     @State private var showPreview = false
     @State private var capturedImage: UIImage?
     @State private var showSettings = false
+    @State private var showHistory = false
+    @EnvironmentObject private var store: MealStore
 
     var body: some View {
         ZStack {
@@ -14,6 +16,16 @@ struct CameraView: View {
                 .ignoresSafeArea()
             VStack {
                 HStack {
+                    Button(action: { showHistory.toggle() }) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .font(.title2)
+                            .padding()
+                    }
+                    .sheet(isPresented: $showHistory) {
+                        NavigationView {
+                            HistoryView()
+                        }
+                    }
                     Spacer()
                     Button(action: { showSettings.toggle() }) {
                         Image(systemName: "gearshape")
@@ -53,6 +65,7 @@ struct CameraView: View {
         .fullScreenCover(isPresented: $showPreview) {
             if let img = capturedImage {
                 PreviewView(image: img)
+                    .environmentObject(store)
             }
         }
     }
@@ -61,4 +74,5 @@ struct CameraView: View {
 extension Notification.Name {
     static let capturePhoto = Notification.Name("capturePhoto")
     static let photoCaptured = Notification.Name("photoCaptured")
+    static let resumeCamera = Notification.Name("resumeCamera")
 }

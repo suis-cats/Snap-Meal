@@ -19,6 +19,11 @@ struct CameraPreviewView: UIViewRepresentable {
             let settings = AVCapturePhotoSettings()
             output.capturePhoto(with: settings, delegate: context.coordinator)
         }
+        NotificationCenter.default.addObserver(forName: .resumeCamera, object: nil, queue: .main) { _ in
+            if !session.isRunning {
+                session.startRunning()
+            }
+        }
         return view
     }
 
@@ -44,8 +49,11 @@ struct CameraPreviewView: UIViewRepresentable {
 
         func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
             if let data = photo.fileDataRepresentation(), let uiImage = UIImage(data: data) {
-                parent.image = uiImage
-                NotificationCenter.default.post(name: .photoCaptured, object: uiImage)
+                parent.session.stopRunning()
+                DispatchQueue.main.async {
+                    parent.image = uiImage
+                    NotificationCenter.default.post(name: .photoCaptured, object: uiImage)
+                }
             }
         }
     }

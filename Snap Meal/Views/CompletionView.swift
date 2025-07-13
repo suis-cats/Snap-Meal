@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CompletionView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var showHistory = false
 
     var body: some View {
         VStack(spacing: 20) {
@@ -12,10 +13,8 @@ struct CompletionView: View {
             Text("登録が完了しました")
                 .font(.title)
             HStack {
-                Button("履歴を見る") {
-                    // show history
-                }
-                .padding()
+                Button("履歴を見る") { showHistory = true }
+                    .padding()
                 Button("もう一度撮る") {
                     dismiss()
                 }
@@ -25,6 +24,11 @@ struct CompletionView: View {
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 dismiss()
+            }
+        }
+        .sheet(isPresented: $showHistory) {
+            NavigationView {
+                HistoryView()
             }
         }
     }

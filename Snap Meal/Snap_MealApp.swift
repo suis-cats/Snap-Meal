@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct Snap_MealApp: App {
+    @StateObject private var mealStore = MealStore()
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -26,6 +27,7 @@ struct Snap_MealApp: App {
     var body: some Scene {
         WindowGroup {
             CameraView()
+                .environmentObject(mealStore)
         }
         .modelContainer(sharedModelContainer)
     }
