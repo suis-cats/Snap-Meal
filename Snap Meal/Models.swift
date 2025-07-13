@@ -17,7 +17,6 @@ struct Meal: Identifiable, Codable {
     var calories: Double?
     var protein: Double?
     var notes: String?
-
     /// Convenience wrapper around `photoData` so SwiftUI views can work with
     /// `UIImage` directly while still allowing the struct to conform to
     /// `Codable`.
